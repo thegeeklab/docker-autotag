@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+  
+import sys
+
+import dockerautotag.__main__
+
+sys.exit(dockerautotag.__main__.main())

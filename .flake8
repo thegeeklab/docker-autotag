@@ -1,0 +1,18 @@
+[flake8]
+ignore = D102, D103, D107, D202, W503
+max-line-length = 99
+inline-quotes = double
+exclude =
+    .git
+    .tox
+    __pycache__
+    build
+    dist
+    tests
+    *.pyc
+    *.egg-info
+    .cache
+    .eggs
+    env*
+application-import-names = ansiblelater
+format = ${cyan}%(path)s:%(row)d:%(col)d${reset}: ${red_bold}%(code)s${reset} %(text)s
