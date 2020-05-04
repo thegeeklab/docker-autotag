@@ -51,7 +51,10 @@ class Autotag:
 
     @staticmethod
     def _tag_extra(tags, extra):
-        pass
+        if extra:
+            e = [x.strip() for x in extra.split(",")]
+
+        return tags + e or []
 
     @staticmethod
     def _tag_suffix(tags, suffix):
@@ -113,6 +116,7 @@ class Autotag:
 
         v = self._default_tags(config["version"], config["ignore_pre"], config["force_latest"])
         v = self._tag_suffix(v, config["suffix"])
+        v = self._tag_extra(v, config["extra"])
 
         if config["file"]:
             try:
