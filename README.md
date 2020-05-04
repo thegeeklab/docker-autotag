@@ -12,12 +12,50 @@ Simple tool to create a list of docker tags from a given version string.
 ## Environment variables
 
 ```Shell
+# if not set a comma-separated list will be printed to stdout
 DOCKER_AUTOTAG_OUTPUT_FILE=
+# adds a given suffix to every determined tag
 DOCKER_AUTOTAG_SUFFIX=
+# version string to use; returns 'latest' if nothing is specified
 DOCKER_AUTOTAG_VERSION=
+# comma-seprated list of static tags to add to the result set
 DOCKER_AUTOTAG_EXTRA_TAGS=
+# 'latest' tag would only be used if determined tag list is empty; adds always 'latest' to the result
 DOCKER_AUTOTAG_FORCE_LATEST=False
+# if the given version string contains a prerelease, no other tags will be returned
 DOCKER_AUTOTAG_IGNORE_PRERELEASE=False
+```
+
+## Examples
+
+```Shell
+DOCKER_AUTOTAG_VERSION=1.0.1 docker-autotag
+# 1.0.1,1.0,1
+
+DOCKER_AUTOTAG_VERSION=0.1.0 docker-autotag
+# 0.1.0, 0.1
+
+## 'v' prefixes e.g. from git tags will be removed
+DOCKER_AUTOTAG_VERSION=v1.0.1 docker-autotag
+# 1.0.1,1.0,1
+
+## unsufficient semver version strings will be tried to convert automatically
+## if conversion doesn't work return 'latest'
+DOCKER_AUTOTAG_VERSION=1.0 docker-autotag
+# 1.0.0,1.0,1
+
+DOCKER_AUTOTAG_VERSION=1.0.0-beta docker-autotag
+# 1.0.0-beta
+
+## ignore prerelease to always get a full list of tags
+DOCKER_AUTOTAG_IGNORE_PRERELEASE=True DOCKER_AUTOTAG_VERSION=1.0.0-beta docker-autotag
+# 1.0.0-beta,1.0.0,1.0,1
+
+DOCKER_AUTOTAG_SUFFIX=amd64 DOCKER_AUTOTAG_VERSION=1.0.0 docker-autotag
+# 1.0.0,1.0,1,1.0.0-amd64,1.0-amd64,1-amd64
+
+DOCKER_AUTOTAG_EXTRA_TAGS=extra1,extra2 DOCKER_AUTOTAG_VERSION=1.0.0 docker-autotag
+# 1.0.0,1.0,1,extra1,extra2
 ```
 
 ## License
