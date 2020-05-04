@@ -51,10 +51,11 @@ class Autotag:
 
     @staticmethod
     def _tag_extra(tags, extra):
+        e = []
         if extra:
             e = [x.strip() for x in extra.split(",")]
 
-        return tags + e or []
+        return tags + e
 
     @staticmethod
     def _tag_suffix(tags, suffix):
