@@ -125,5 +125,5 @@ class Autotag:
                     f.write(",".join(v))
             except IOError as e:
                 self.logger.error("Unable to write file: {}".format(str(e)))
-        else:
-            print(",".join(v))
+
+        print(",".join(v))
