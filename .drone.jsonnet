@@ -1,7 +1,6 @@
 local PythonVersion(pyversion='3.5') = {
   name: 'python' + std.strReplace(pyversion, '.', '') + '-pytest',
   image: 'python:' + pyversion,
-  pull: 'always',
   environment: {
     PY_COLORS: 1,
   },
@@ -27,7 +26,6 @@ local PipelineLint = {
     {
       name: 'flake8',
       image: 'python:3.8',
-      pull: 'always',
       environment: {
         PY_COLORS: 1,
       },
@@ -56,12 +54,12 @@ local PipelineTest = {
     PythonVersion(pyversion='3.7'),
     PythonVersion(pyversion='3.8'),
   ],
-  trigger: {
-    ref: ['refs/heads/master', 'refs/tags/**', 'refs/pull/**'],
-  },
   depends_on: [
     'lint',
   ],
+  trigger: {
+    ref: ['refs/heads/master', 'refs/tags/**', 'refs/pull/**'],
+  },
 };
 
 local PipelineSecurity = {
@@ -75,7 +73,6 @@ local PipelineSecurity = {
     {
       name: 'bandit',
       image: 'python:3.8',
-      pull: 'always',
       environment: {
         PY_COLORS: 1,
       },
@@ -163,7 +160,6 @@ local PipelineBuildContainer(arch='amd64') = {
     {
       name: 'build',
       image: 'python:3.8',
-      pull: 'always',
       commands: [
         'python setup.py bdist_wheel',
       ],
@@ -171,33 +167,50 @@ local PipelineBuildContainer(arch='amd64') = {
     {
       name: 'dryrun',
       image: 'plugins/docker:18-linux-' + arch,
-      pull: 'always',
       settings: {
         dry_run: true,
-        dockerfile: 'Dockerfile',
-        repo: 'xoxys/docker-autotag',
+        dockerfile: 'docker/Dockerfile',
+        repo: 'xoxys/${DRONE_REPO_NAME}',
         username: { from_secret: 'docker_username' },
         password: { from_secret: 'docker_password' },
       },
+      depends_on: ['build'],
       when: {
         ref: ['refs/pull/**'],
       },
     },
     {
-      name: 'publish',
+      name: 'publish-dockerhub',
       image: 'plugins/docker:18-linux-' + arch,
-      pull: 'always',
       settings: {
         auto_tag: true,
         auto_tag_suffix: arch,
-        dockerfile: 'Dockerfile',
-        repo: 'xoxys/docker-autotag',
+        dockerfile: 'docker/Dockerfile',
+        repo: 'xoxys/${DRONE_REPO_NAME}',
         username: { from_secret: 'docker_username' },
         password: { from_secret: 'docker_password' },
       },
       when: {
         ref: ['refs/heads/master', 'refs/tags/**'],
       },
+      depends_on: ['dryrun'],
+    },
+    {
+      name: 'publish-quay',
+      image: 'plugins/docker:18-linux-' + arch,
+      settings: {
+        auto_tag: true,
+        auto_tag_suffix: arch,
+        dockerfile: 'docker/Dockerfile',
+        registry: 'quay.io',
+        repo: 'quay.io/thegeeklab/${DRONE_REPO_NAME}',
+        username: { from_secret: 'quay_username' },
+        password: { from_secret: 'quay_password' },
+      },
+      when: {
+        ref: ['refs/heads/master', 'refs/tags/**'],
+      },
+      depends_on: ['dryrun'],
     },
   ],
   depends_on: [
@@ -218,25 +231,64 @@ local PipelineNotifications = {
   steps: [
     {
       image: 'plugins/manifest',
-      name: 'manifest',
+      name: 'manifest-dockerhub',
       settings: {
         ignore_missing: true,
         auto_tag: true,
         username: { from_secret: 'docker_username' },
         password: { from_secret: 'docker_password' },
-        spec: 'manifest.tmpl',
+        spec: 'docker/manifest.tmpl',
+      },
+      when: {
+        status: ['success'],
       },
     },
     {
-      name: 'readme',
-      image: 'sheogorath/readme-to-dockerhub',
+      image: 'plugins/manifest',
+      name: 'manifest-quay',
+      settings: {
+        ignore_missing: true,
+        auto_tag: true,
+        username: { from_secret: 'quay_username' },
+        password: { from_secret: 'quay_password' },
+        spec: 'docker/manifest-quay.tmpl',
+      },
+      when: {
+        status: ['success'],
+      },
+    },
+    {
+      name: 'pushrm-dockerhub',
+      pull: 'always',
+      image: 'chko/docker-pushrm:1',
       environment: {
-        DOCKERHUB_USERNAME: { from_secret: 'docker_username' },
-        DOCKERHUB_PASSWORD: { from_secret: 'docker_password' },
-        DOCKERHUB_REPO_PREFIX: 'xoxys',
-        DOCKERHUB_REPO_NAME: 'docker-autotag',
-        README_PATH: 'README.md',
-        SHORT_DESCRIPTION: 'docker-autotag - Automate cloning a single branch from a repo list',
+        DOCKER_PASS: {
+          from_secret: 'docker_password',
+        },
+        DOCKER_USER: {
+          from_secret: 'docker_username',
+        },
+        PUSHRM_FILE: 'README.md',
+        PUSHRM_SHORT: 'docker-autotag - Create docker tags from a given version string',
+        PUSHRM_TARGET: 'xoxys/${DRONE_REPO_NAME}',
+      },
+      when: {
+        status: ['success'],
+      },
+    },
+    {
+      name: 'pushrm-quay',
+      pull: 'always',
+      image: 'chko/docker-pushrm:1',
+      environment: {
+        APIKEY__QUAY_IO: {
+          from_secret: 'quay_token',
+        },
+        PUSHRM_FILE: 'README.md',
+        PUSHRM_TARGET: 'quay.io/thegeeklab/${DRONE_REPO_NAME}',
+      },
+      when: {
+        status: ['success'],
       },
     },
     {
@@ -248,6 +300,9 @@ local PipelineNotifications = {
         template: 'Status: **{{ build.status }}**<br/> Build: [{{ repo.Owner }}/{{ repo.Name }}]({{ build.link }}) ({{ build.branch }}) by {{ build.author }}<br/> Message: {{ build.message }}',
         username: { from_secret: 'matrix_username' },
         password: { from_secret: 'matrix_password' },
+      },
+      when: {
+        status: ['success', 'failure'],
       },
     },
   ],

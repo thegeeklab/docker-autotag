@@ -8,7 +8,6 @@ platform:
 
 steps:
 - name: flake8
-  pull: always
   image: python:3.8
   commands:
   - pip install -r dev-requirements.txt -qq
@@ -33,7 +32,6 @@ platform:
 
 steps:
 - name: python35-pytest
-  pull: always
   image: python:3.5
   commands:
   - pip install -r dev-requirements.txt -qq
@@ -46,7 +44,6 @@ steps:
   - clone
 
 - name: python36-pytest
-  pull: always
   image: python:3.6
   commands:
   - pip install -r dev-requirements.txt -qq
@@ -59,7 +56,6 @@ steps:
   - clone
 
 - name: python37-pytest
-  pull: always
   image: python:3.7
   commands:
   - pip install -r dev-requirements.txt -qq
@@ -72,7 +68,6 @@ steps:
   - clone
 
 - name: python38-pytest
-  pull: always
   image: python:3.8
   commands:
   - pip install -r dev-requirements.txt -qq
@@ -103,7 +98,6 @@ platform:
 
 steps:
 - name: bandit
-  pull: always
   image: python:3.8
   commands:
   - pip install -r dev-requirements.txt -qq
@@ -187,42 +181,62 @@ platform:
 
 steps:
 - name: build
-  pull: always
   image: python:3.8
   commands:
   - python setup.py bdist_wheel
 
 - name: dryrun
-  pull: always
   image: plugins/docker:18-linux-amd64
   settings:
-    dockerfile: Dockerfile
+    dockerfile: docker/Dockerfile
     dry_run: true
     password:
       from_secret: docker_password
-    repo: xoxys/docker-autotag
+    repo: xoxys/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
     ref:
     - refs/pull/**
+  depends_on:
+  - build
 
-- name: publish
-  pull: always
+- name: publish-dockerhub
   image: plugins/docker:18-linux-amd64
   settings:
     auto_tag: true
     auto_tag_suffix: amd64
-    dockerfile: Dockerfile
+    dockerfile: docker/Dockerfile
     password:
       from_secret: docker_password
-    repo: xoxys/docker-autotag
+    repo: xoxys/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
     ref:
     - refs/heads/master
     - refs/tags/**
+  depends_on:
+  - dryrun
+
+- name: publish-quay
+  image: plugins/docker:18-linux-amd64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: amd64
+    dockerfile: docker/Dockerfile
+    password:
+      from_secret: quay_password
+    registry: quay.io
+    repo: quay.io/thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: quay_username
+  when:
+    ref:
+    - refs/heads/master
+    - refs/tags/**
+  depends_on:
+  - dryrun
 
 trigger:
   ref:
@@ -243,42 +257,62 @@ platform:
 
 steps:
 - name: build
-  pull: always
   image: python:3.8
   commands:
   - python setup.py bdist_wheel
 
 - name: dryrun
-  pull: always
   image: plugins/docker:18-linux-arm64
   settings:
-    dockerfile: Dockerfile
+    dockerfile: docker/Dockerfile
     dry_run: true
     password:
       from_secret: docker_password
-    repo: xoxys/docker-autotag
+    repo: xoxys/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
     ref:
     - refs/pull/**
+  depends_on:
+  - build
 
-- name: publish
-  pull: always
+- name: publish-dockerhub
   image: plugins/docker:18-linux-arm64
   settings:
     auto_tag: true
     auto_tag_suffix: arm64
-    dockerfile: Dockerfile
+    dockerfile: docker/Dockerfile
     password:
       from_secret: docker_password
-    repo: xoxys/docker-autotag
+    repo: xoxys/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
     ref:
     - refs/heads/master
     - refs/tags/**
+  depends_on:
+  - dryrun
+
+- name: publish-quay
+  image: plugins/docker:18-linux-arm64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: arm64
+    dockerfile: docker/Dockerfile
+    password:
+      from_secret: quay_password
+    registry: quay.io
+    repo: quay.io/thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: quay_username
+  when:
+    ref:
+    - refs/heads/master
+    - refs/tags/**
+  depends_on:
+  - dryrun
 
 trigger:
   ref:
@@ -299,42 +333,62 @@ platform:
 
 steps:
 - name: build
-  pull: always
   image: python:3.8
   commands:
   - python setup.py bdist_wheel
 
 - name: dryrun
-  pull: always
   image: plugins/docker:18-linux-arm
   settings:
-    dockerfile: Dockerfile
+    dockerfile: docker/Dockerfile
     dry_run: true
     password:
       from_secret: docker_password
-    repo: xoxys/docker-autotag
+    repo: xoxys/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
     ref:
     - refs/pull/**
+  depends_on:
+  - build
 
-- name: publish
-  pull: always
+- name: publish-dockerhub
   image: plugins/docker:18-linux-arm
   settings:
     auto_tag: true
     auto_tag_suffix: arm
-    dockerfile: Dockerfile
+    dockerfile: docker/Dockerfile
     password:
       from_secret: docker_password
-    repo: xoxys/docker-autotag
+    repo: xoxys/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
     ref:
     - refs/heads/master
     - refs/tags/**
+  depends_on:
+  - dryrun
+
+- name: publish-quay
+  image: plugins/docker:18-linux-arm
+  settings:
+    auto_tag: true
+    auto_tag_suffix: arm
+    dockerfile: docker/Dockerfile
+    password:
+      from_secret: quay_password
+    registry: quay.io
+    repo: quay.io/thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: quay_username
+  when:
+    ref:
+    - refs/heads/master
+    - refs/tags/**
+  depends_on:
+  - dryrun
 
 trigger:
   ref:
@@ -354,28 +408,60 @@ platform:
   arch: amd64
 
 steps:
-- name: manifest
+- name: manifest-dockerhub
   image: plugins/manifest
   settings:
     auto_tag: true
     ignore_missing: true
     password:
       from_secret: docker_password
-    spec: manifest.tmpl
+    spec: docker/manifest.tmpl
     username:
       from_secret: docker_username
+  when:
+    status:
+    - success
 
-- name: readme
-  image: sheogorath/readme-to-dockerhub
+- name: manifest-quay
+  image: plugins/manifest
+  settings:
+    auto_tag: true
+    ignore_missing: true
+    password:
+      from_secret: quay_password
+    spec: docker/manifest-quay.tmpl
+    username:
+      from_secret: quay_username
+  when:
+    status:
+    - success
+
+- name: pushrm-dockerhub
+  pull: always
+  image: chko/docker-pushrm:1
   environment:
-    DOCKERHUB_PASSWORD:
+    DOCKER_PASS:
       from_secret: docker_password
-    DOCKERHUB_REPO_NAME: docker-autotag
-    DOCKERHUB_REPO_PREFIX: xoxys
-    DOCKERHUB_USERNAME:
+    DOCKER_USER:
       from_secret: docker_username
-    README_PATH: README.md
-    SHORT_DESCRIPTION: docker-autotag - Automate cloning a single branch from a repo list
+    PUSHRM_FILE: README.md
+    PUSHRM_SHORT: docker-autotag - Create docker tags from a given version string
+    PUSHRM_TARGET: xoxys/${DRONE_REPO_NAME}
+  when:
+    status:
+    - success
+
+- name: pushrm-quay
+  pull: always
+  image: chko/docker-pushrm:1
+  environment:
+    APIKEY__QUAY_IO:
+      from_secret: quay_token
+    PUSHRM_FILE: README.md
+    PUSHRM_TARGET: quay.io/thegeeklab/${DRONE_REPO_NAME}
+  when:
+    status:
+    - success
 
 - name: matrix
   image: plugins/matrix
@@ -389,6 +475,10 @@ steps:
     template: "Status: **{{ build.status }}**<br/> Build: [{{ repo.Owner }}/{{ repo.Name }}]({{ build.link }}) ({{ build.branch }}) by {{ build.author }}<br/> Message: {{ build.message }}"
     username:
       from_secret: matrix_username
+  when:
+    status:
+    - success
+    - failure
 
 trigger:
   ref:
@@ -406,6 +496,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: a58be4e73614e614db6ea5d8e7a9aed43595c39a6af432ff2b666abeda695a12
+hmac: 5997a4be30a1f15ebe8dddd9584dbfc496c673497c12ee4b61a437e0076bc00d
 
 ...
