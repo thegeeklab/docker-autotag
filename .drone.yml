@@ -192,7 +192,7 @@ steps:
     dry_run: true
     password:
       from_secret: docker_password
-    repo: xoxys/${DRONE_REPO_NAME}
+    repo: thegeeklab/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
@@ -209,7 +209,7 @@ steps:
     dockerfile: docker/Dockerfile
     password:
       from_secret: docker_password
-    repo: xoxys/${DRONE_REPO_NAME}
+    repo: thegeeklab/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
@@ -268,7 +268,7 @@ steps:
     dry_run: true
     password:
       from_secret: docker_password
-    repo: xoxys/${DRONE_REPO_NAME}
+    repo: thegeeklab/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
@@ -285,7 +285,7 @@ steps:
     dockerfile: docker/Dockerfile
     password:
       from_secret: docker_password
-    repo: xoxys/${DRONE_REPO_NAME}
+    repo: thegeeklab/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
@@ -344,7 +344,7 @@ steps:
     dry_run: true
     password:
       from_secret: docker_password
-    repo: xoxys/${DRONE_REPO_NAME}
+    repo: thegeeklab/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
@@ -361,7 +361,7 @@ steps:
     dockerfile: docker/Dockerfile
     password:
       from_secret: docker_password
-    repo: xoxys/${DRONE_REPO_NAME}
+    repo: thegeeklab/${DRONE_REPO_NAME}
     username:
       from_secret: docker_username
   when:
@@ -446,7 +446,7 @@ steps:
       from_secret: docker_username
     PUSHRM_FILE: README.md
     PUSHRM_SHORT: docker-autotag - Create docker tags from a given version string
-    PUSHRM_TARGET: xoxys/${DRONE_REPO_NAME}
+    PUSHRM_TARGET: thegeeklab/${DRONE_REPO_NAME}
   when:
     status:
     - success
@@ -496,6 +496,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 5997a4be30a1f15ebe8dddd9584dbfc496c673497c12ee4b61a437e0076bc00d
+hmac: 10969ca6f69c4a4201f1bc51be0ee7b4915846f273ff205836081f4cd4d68e40
 
 ...

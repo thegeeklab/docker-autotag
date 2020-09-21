@@ -2,14 +2,15 @@
 
 docker-autotag - Create docker tags from a given version string
 
-[![Build Status](https://img.shields.io/drone/build/xoxys/docker-autotag?logo=drone)](https://cloud.drone.io/xoxys/docker-autotag)
-[![Docker Hub](https://img.shields.io/badge/dockerhub-latest-blue.svg?logo=docker&logoColor=white)](https://hub.docker.com/r/xoxys/docker-autotag)
+[![Build Status](https://img.shields.io/drone/build/thegeeklab/docker-autotag?logo=drone)](https://cloud.drone.io/thegeeklab/docker-autotag)
+[![Docker Hub](https://img.shields.io/badge/dockerhub-latest-blue.svg?logo=docker&logoColor=white)](https://hub.docker.com/r/thegeeklab/docker-autotag)
 [![Quay.io](https://img.shields.io/badge/quay-latest-blue.svg?logo=docker&logoColor=white)](https://quay.io/repository/thegeeklab/docker-autotag)
 [![Python Version](https://img.shields.io/pypi/pyversions/docker-autotag.svg)](https://pypi.org/project/docker-autotag/)
 [![PyPi Status](https://img.shields.io/pypi/status/docker-autotag.svg)](https://pypi.org/project/docker-autotag/)
 [![PyPi Release](https://img.shields.io/pypi/v/docker-autotag.svg)](https://pypi.org/project/docker-autotag/)
-[![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/xoxys/docker-autotag)
-[![License: MIT](https://img.shields.io/github/license/xoxys/docker-autotag)](LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/thegeeklab/docker-autotag)](https://github.com/thegeeklab/docker-autotag/graphs/contributors)
+[![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/thegeeklab/docker-autotag)
+[![License: MIT](https://img.shields.io/github/license/thegeeklab/docker-autotag)](LICENSE)
 
 Simple tool to create a list of docker tags from a given version string.
 
@@ -62,10 +63,10 @@ DOCKER_AUTOTAG_EXTRA_TAGS=extra1,extra2 DOCKER_AUTOTAG_VERSION=1.0.0 docker-auto
 # 1.0.0,1.0,1,extra1,extra2
 ```
 
+## Contributors
+
+Special thanks goes to all [contributors](https://github.com/thegeeklab/docker-autotag/graphs/contributors).
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Maintainers and Contributors
-
-[Robert Kaussow](https://github.com/xoxys)
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/thegeeklab/docker-autotag/blob/master/LICENSE) file for details.
