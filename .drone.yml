@@ -445,7 +445,7 @@ steps:
     DOCKER_USER:
       from_secret: docker_username
     PUSHRM_FILE: README.md
-    PUSHRM_SHORT: docker-autotag - Create docker tags from a given version string
+    PUSHRM_SHORT: Create docker tags from a given version string
     PUSHRM_TARGET: thegeeklab/${DRONE_REPO_NAME}
   when:
     status:
@@ -496,6 +496,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 10969ca6f69c4a4201f1bc51be0ee7b4915846f273ff205836081f4cd4d68e40
+hmac: 93168b5700329526d2bf3ca76df7db876db4d2cd9f3332fec0c17b2d7244221b
 
 ...
