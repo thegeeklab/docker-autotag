@@ -1,7 +1,7 @@
 ---
 repository:
   name: docker-autotag
-  description: Simple tool to create a list of docker tags from a given version string
+  description: Create docker tags from a given version string
   topics: docker, ci, automation, versioning, python
 
   private: false

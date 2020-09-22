@@ -1,6 +1,6 @@
 # docker-autotag
 
-docker-autotag - Create docker tags from a given version string
+Create docker tags from a given version string
 
 [![Build Status](https://img.shields.io/drone/build/thegeeklab/docker-autotag?logo=drone)](https://cloud.drone.io/thegeeklab/docker-autotag)
 [![Docker Hub](https://img.shields.io/badge/dockerhub-latest-blue.svg?logo=docker&logoColor=white)](https://hub.docker.com/r/thegeeklab/docker-autotag)

@@ -269,7 +269,7 @@ local PipelineNotifications = {
           from_secret: 'docker_username',
         },
         PUSHRM_FILE: 'README.md',
-        PUSHRM_SHORT: 'docker-autotag - Create docker tags from a given version string',
+        PUSHRM_SHORT: 'Create docker tags from a given version string',
         PUSHRM_TARGET: 'thegeeklab/${DRONE_REPO_NAME}',
       },
       when: {
