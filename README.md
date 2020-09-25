@@ -10,7 +10,7 @@ Create docker tags from a given version string
 [![PyPi Release](https://img.shields.io/pypi/v/docker-autotag.svg)](https://pypi.org/project/docker-autotag/)
 [![GitHub contributors](https://img.shields.io/github/contributors/thegeeklab/docker-autotag)](https://github.com/thegeeklab/docker-autotag/graphs/contributors)
 [![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/thegeeklab/docker-autotag)
-[![License: MIT](https://img.shields.io/github/license/thegeeklab/docker-autotag)](LICENSE)
+[![License: MIT](https://img.shields.io/github/license/thegeeklab/docker-autotag)](https://github.com/thegeeklab/docker-autotag/blob/master/LICENSE)
 
 Simple tool to create a list of docker tags from a given version string.
 
