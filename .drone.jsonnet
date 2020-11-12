@@ -25,7 +25,7 @@ local PipelineLint = {
   steps: [
     {
       name: 'flake8',
-      image: 'python:3.8',
+      image: 'python:3.9',
       environment: {
         PY_COLORS: 1,
       },
@@ -53,6 +53,7 @@ local PipelineTest = {
     PythonVersion(pyversion='3.6'),
     PythonVersion(pyversion='3.7'),
     PythonVersion(pyversion='3.8'),
+    PythonVersion(pyversion='3.9'),
   ],
   depends_on: [
     'lint',
@@ -72,7 +73,7 @@ local PipelineSecurity = {
   steps: [
     {
       name: 'bandit',
-      image: 'python:3.8',
+      image: 'python:3.9',
       environment: {
         PY_COLORS: 1,
       },
@@ -101,7 +102,7 @@ local PipelineBuildPackage = {
   steps: [
     {
       name: 'build',
-      image: 'python:3.8',
+      image: 'python:3.9',
       commands: [
         'python setup.py sdist bdist_wheel',
       ],
@@ -159,7 +160,7 @@ local PipelineBuildContainer(arch='amd64') = {
   steps: [
     {
       name: 'build',
-      image: 'python:3.8',
+      image: 'python:3.9',
       commands: [
         'python setup.py bdist_wheel',
       ],
