@@ -8,13 +8,16 @@ platform:
 
 steps:
 - name: flake8
-  image: python:3.8
+  image: python:3.9
   commands:
   - pip install -r dev-requirements.txt -qq
   - pip install -qq .
   - flake8 ./dockerautotag
   environment:
     PY_COLORS: 1
+
+image_pull_secrets:
+- docker_config
 
 trigger:
   ref:
@@ -79,6 +82,21 @@ steps:
   depends_on:
   - clone
 
+- name: python39-pytest
+  image: python:3.9
+  commands:
+  - pip install -r dev-requirements.txt -qq
+  - pip install -qq .
+  - docker-autotag --help
+  - docker-autotag --version
+  environment:
+    PY_COLORS: 1
+  depends_on:
+  - clone
+
+image_pull_secrets:
+- docker_config
+
 trigger:
   ref:
   - refs/heads/master
@@ -98,13 +116,16 @@ platform:
 
 steps:
 - name: bandit
-  image: python:3.8
+  image: python:3.9
   commands:
   - pip install -r dev-requirements.txt -qq
   - pip install -qq .
   - bandit -r ./dockerautotag -x ./dockerautotag/tests
   environment:
     PY_COLORS: 1
+
+image_pull_secrets:
+- docker_config
 
 trigger:
   ref:
@@ -125,7 +146,7 @@ platform:
 
 steps:
 - name: build
-  image: python:3.8
+  image: python:3.9
   commands:
   - python setup.py sdist bdist_wheel
 
@@ -162,6 +183,9 @@ steps:
     ref:
     - refs/tags/**
 
+image_pull_secrets:
+- docker_config
+
 trigger:
   ref:
   - refs/heads/master
@@ -181,13 +205,15 @@ platform:
 
 steps:
 - name: build
-  image: python:3.8
+  image: python:3.9
   commands:
   - python setup.py bdist_wheel
 
 - name: dryrun
-  image: plugins/docker:18-linux-amd64
+  image: plugins/docker:19
   settings:
+    config:
+      from_secret: docker_config
     dockerfile: docker/Dockerfile
     dry_run: true
     password:
@@ -202,10 +228,12 @@ steps:
   - build
 
 - name: publish-dockerhub
-  image: plugins/docker:18-linux-amd64
+  image: plugins/docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: amd64
+    config:
+      from_secret: docker_config
     dockerfile: docker/Dockerfile
     password:
       from_secret: docker_password
@@ -220,10 +248,12 @@ steps:
   - dryrun
 
 - name: publish-quay
-  image: plugins/docker:18-linux-amd64
+  image: plugins/docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: amd64
+    config:
+      from_secret: docker_config
     dockerfile: docker/Dockerfile
     password:
       from_secret: quay_password
@@ -237,6 +267,9 @@ steps:
     - refs/tags/**
   depends_on:
   - dryrun
+
+image_pull_secrets:
+- docker_config
 
 trigger:
   ref:
@@ -257,13 +290,15 @@ platform:
 
 steps:
 - name: build
-  image: python:3.8
+  image: python:3.9
   commands:
   - python setup.py bdist_wheel
 
 - name: dryrun
-  image: plugins/docker:18-linux-arm64
+  image: plugins/docker:19
   settings:
+    config:
+      from_secret: docker_config
     dockerfile: docker/Dockerfile
     dry_run: true
     password:
@@ -278,10 +313,12 @@ steps:
   - build
 
 - name: publish-dockerhub
-  image: plugins/docker:18-linux-arm64
+  image: plugins/docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: arm64
+    config:
+      from_secret: docker_config
     dockerfile: docker/Dockerfile
     password:
       from_secret: docker_password
@@ -296,10 +333,12 @@ steps:
   - dryrun
 
 - name: publish-quay
-  image: plugins/docker:18-linux-arm64
+  image: plugins/docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: arm64
+    config:
+      from_secret: docker_config
     dockerfile: docker/Dockerfile
     password:
       from_secret: quay_password
@@ -313,6 +352,9 @@ steps:
     - refs/tags/**
   depends_on:
   - dryrun
+
+image_pull_secrets:
+- docker_config
 
 trigger:
   ref:
@@ -333,13 +375,15 @@ platform:
 
 steps:
 - name: build
-  image: python:3.8
+  image: python:3.9
   commands:
   - python setup.py bdist_wheel
 
 - name: dryrun
-  image: plugins/docker:18-linux-arm
+  image: plugins/docker:19
   settings:
+    config:
+      from_secret: docker_config
     dockerfile: docker/Dockerfile
     dry_run: true
     password:
@@ -354,10 +398,12 @@ steps:
   - build
 
 - name: publish-dockerhub
-  image: plugins/docker:18-linux-arm
+  image: plugins/docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: arm
+    config:
+      from_secret: docker_config
     dockerfile: docker/Dockerfile
     password:
       from_secret: docker_password
@@ -372,10 +418,12 @@ steps:
   - dryrun
 
 - name: publish-quay
-  image: plugins/docker:18-linux-arm
+  image: plugins/docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: arm
+    config:
+      from_secret: docker_config
     dockerfile: docker/Dockerfile
     password:
       from_secret: quay_password
@@ -389,6 +437,9 @@ steps:
     - refs/tags/**
   depends_on:
   - dryrun
+
+image_pull_secrets:
+- docker_config
 
 trigger:
   ref:
@@ -480,6 +531,9 @@ steps:
     - success
     - failure
 
+image_pull_secrets:
+- docker_config
+
 trigger:
   ref:
   - refs/heads/master
@@ -496,6 +550,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 93168b5700329526d2bf3ca76df7db876db4d2cd9f3332fec0c17b2d7244221b
+hmac: d9b5c4f8f10284f81bea1041a8e2d5ea17ac134c16f4cd7a5a77c3bddb5ae17d
 
 ...
