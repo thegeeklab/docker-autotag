@@ -65,7 +65,8 @@ DOCKER_AUTOTAG_EXTRA_TAGS=extra1,extra2 DOCKER_AUTOTAG_VERSION=1.0.0 docker-auto
 
 ## Contributors
 
-Special thanks goes to all [contributors](https://github.com/thegeeklab/docker-autotag/graphs/contributors).
+Special thanks goes to all [contributors](https://github.com/thegeeklab/docker-autotag/graphs/contributors). If you would like to contribute,
+please see the [instructions](https://github.com/thegeeklab/docker-autotag/blob/master/CONTRIBUTING.md).
 
 ## License
 
