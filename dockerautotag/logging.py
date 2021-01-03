@@ -7,8 +7,8 @@ import sys
 import colorama
 from pythonjsonlogger import jsonlogger
 
-from dockerautotag.Utils import Singleton
-from dockerautotag.Utils import to_bool
+from dockerautotag.utils import Singleton
+from dockerautotag.utils import to_bool
 
 CONSOLE_FORMAT = "{}[%(levelname)s]{} %(message)s"
 JSON_FORMAT = "(asctime) (levelname) (message)"

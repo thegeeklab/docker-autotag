@@ -1,17 +1,17 @@
-local PythonVersion(pyversion='3.5') = {
+local PythonVersion(pyversion='3.6') = {
   name: 'python' + std.strReplace(pyversion, '.', '') + '-pytest',
   image: 'python:' + pyversion,
   environment: {
     PY_COLORS: 1,
   },
   commands: [
-    'pip install -r dev-requirements.txt -qq',
-    'pip install -qq .',
-    'docker-autotag --help',
-    'docker-autotag --version',
+    'pip install poetry poetry-dynamic-versioning -qq',
+    'poetry install -q',
+    'poetry version',
+    'poetry run docker-autotag --help',
   ],
   depends_on: [
-    'clone',
+    'fetch',
   ],
 };
 
@@ -25,15 +25,29 @@ local PipelineLint = {
   },
   steps: [
     {
+      name: 'yapf',
+      image: 'python:3.9',
+      environment: {
+        PY_COLORS: 1,
+      },
+      commands: [
+        'git fetch -tq',
+        'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry install -q',
+        'poetry run yapf -dr ./dockerautotag',
+      ],
+    },
+    {
       name: 'flake8',
       image: 'python:3.9',
       environment: {
         PY_COLORS: 1,
       },
       commands: [
-        'pip install -r dev-requirements.txt -qq',
-        'pip install -qq .',
-        'flake8 ./dockerautotag',
+        'git fetch -tq',
+        'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry install -q',
+        'poetry run flake8 ./dockerautotag',
       ],
     },
   ],
@@ -51,7 +65,13 @@ local PipelineTest = {
     arch: 'amd64',
   },
   steps: [
-    PythonVersion(pyversion='3.5'),
+    {
+      name: 'fetch',
+      image: 'python:3.9',
+      commands: [
+        'git fetch -tq',
+      ],
+    },
     PythonVersion(pyversion='3.6'),
     PythonVersion(pyversion='3.7'),
     PythonVersion(pyversion='3.8'),
@@ -81,9 +101,10 @@ local PipelineSecurity = {
         PY_COLORS: 1,
       },
       commands: [
-        'pip install -r dev-requirements.txt -qq',
-        'pip install -qq .',
-        'bandit -r ./dockerautotag -x ./dockerautotag/tests',
+        'git fetch -tq',
+        'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry install -q',
+        'poetry run bandit -r ./dockerautotag -x ./dockerautotag/test',
       ],
     },
   ],
@@ -108,7 +129,9 @@ local PipelineBuildPackage = {
       name: 'build',
       image: 'python:3.9',
       commands: [
-        'python setup.py sdist bdist_wheel',
+        'git fetch -tq',
+        'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry build',
       ],
     },
     {
@@ -134,12 +157,15 @@ local PipelineBuildPackage = {
     },
     {
       name: 'publish-pypi',
-      image: 'plugins/pypi',
-      settings: {
-        username: { from_secret: 'pypi_username' },
-        password: { from_secret: 'pypi_password' },
-        repository: 'https://upload.pypi.org/legacy/',
-        skip_build: true,
+      image: 'python:3.9',
+      commands: [
+        'git fetch -tq',
+        'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry publish -n',
+      ],
+      environment: {
+        POETRY_HTTP_BASIC_PYPI_USERNAME: { from_secret: 'pypi_username' },
+        POETRY_HTTP_BASIC_PYPI_PASSWORD: { from_secret: 'pypi_password' },
       },
       when: {
         ref: ['refs/tags/**'],
@@ -167,7 +193,9 @@ local PipelineBuildContainer(arch='amd64') = {
       name: 'build',
       image: 'python:3.9',
       commands: [
-        'python setup.py bdist_wheel',
+        'git fetch -tq',
+        'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry build',
       ],
     },
     {

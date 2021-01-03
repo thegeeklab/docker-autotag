@@ -8,11 +8,11 @@ from collections import defaultdict
 import semantic_version
 
 from dockerautotag import __version__
-from dockerautotag.Logging import SingleLog
-from dockerautotag.Utils import normalize_path
-from dockerautotag.Utils import to_bool
-from dockerautotag.Utils import to_prerelease
-from dockerautotag.Utils import trim_prefix
+from dockerautotag.logging import SingleLog
+from dockerautotag.utils import normalize_path
+from dockerautotag.utils import to_bool
+from dockerautotag.utils import to_prerelease
+from dockerautotag.utils import trim_prefix
 
 
 class Autotag:
@@ -127,3 +127,7 @@ class Autotag:
                 self.logger.error("Unable to write file: {}".format(str(e)))
 
         print(",".join(v))
+
+
+def main():
+    Autotag()
