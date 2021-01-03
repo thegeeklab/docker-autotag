@@ -1,0 +1,25 @@
+FROM python:3.9-alpine
+
+LABEL maintainer="Robert Kaussow <mail@thegeeklab.de>"
+LABEL org.opencontainers.image.authors="Robert Kaussow <mail@thegeeklab.de>"
+LABEL org.opencontainers.image.title="docker-autotag"
+LABEL org.opencontainers.image.url="https://github.com/thegeeklab/docker-autotag"
+LABEL org.opencontainers.image.source="https://github.com/thegeeklab/docker-autotag"
+LABEL org.opencontainers.image.documentation="https://github.com/thegeeklab/docker-autotag"
+
+ENV PY_COLORS=1
+
+ADD dist/docker_autotag-*.whl /
+
+RUN apk --update add --virtual .build-deps build-base libffi-dev libressl-dev && \
+    apk --update add git && \
+    pip install --upgrade --no-cache-dir pip && \
+    pip install --no-cache-dir $(find / -name "docker_autotag-*.whl") && \
+    apk del .build-deps && \
+    rm -f docker_autotag-*.whl && \
+    rm -rf /var/cache/apk/* && \
+    rm -rf /root/.cache/
+
+USER root
+CMD []
+ENTRYPOINT ["/usr/local/bin/docker-autotag"]
