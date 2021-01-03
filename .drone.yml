@@ -13,7 +13,7 @@ steps:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
   - poetry install -q
-  - poetry run yapf -dr ./ansiblelater
+  - poetry run yapf -dr ./dockerautotag
   environment:
     PY_COLORS: 1
 
@@ -22,8 +22,8 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q -E ansible-base
-  - poetry run flake8 ./ansiblelater
+  - poetry install -q
+  - poetry run flake8 ./dockerautotag
   environment:
     PY_COLORS: 1
 
@@ -54,10 +54,9 @@ steps:
   image: python:3.6
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q -E ansible-base
-  - poetry run pytest
+  - poetry install -q
   - poetry version
-  - poetry run ansible-later --help
+  - poetry run docker-autotag --help
   environment:
     PY_COLORS: 1
   depends_on:
@@ -67,10 +66,9 @@ steps:
   image: python:3.7
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q -E ansible-base
-  - poetry run pytest
+  - poetry install -q
   - poetry version
-  - poetry run ansible-later --help
+  - poetry run docker-autotag --help
   environment:
     PY_COLORS: 1
   depends_on:
@@ -80,10 +78,9 @@ steps:
   image: python:3.8
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q -E ansible-base
-  - poetry run pytest
+  - poetry install -q
   - poetry version
-  - poetry run ansible-later --help
+  - poetry run docker-autotag --help
   environment:
     PY_COLORS: 1
   depends_on:
@@ -93,10 +90,9 @@ steps:
   image: python:3.9
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q -E ansible-base
-  - poetry run pytest
+  - poetry install -q
   - poetry version
-  - poetry run ansible-later --help
+  - poetry run docker-autotag --help
   environment:
     PY_COLORS: 1
   depends_on:
@@ -128,8 +124,8 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q -E ansible-base
-  - poetry run bandit -r ./ansiblelater -x ./ansiblelater/test
+  - poetry install -q
+  - poetry run bandit -r ./dockerautotag -x ./dockerautotag/test
   environment:
     PY_COLORS: 1
 
@@ -569,6 +565,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 275ffff237d5798f53f099e75d143bce80cb6500274b15ef429f273c464eae74
+hmac: 261456e77449c37e4b51c30a666e226a07c2fe9f2603e426500b3e89ca35d804
 
 ...

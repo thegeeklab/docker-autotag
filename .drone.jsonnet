@@ -6,10 +6,9 @@ local PythonVersion(pyversion='3.6') = {
   },
   commands: [
     'pip install poetry poetry-dynamic-versioning -qq',
-    'poetry install -q -E ansible-base',
-    'poetry run pytest',
+    'poetry install -q',
     'poetry version',
-    'poetry run ansible-later --help',
+    'poetry run docker-autotag --help',
   ],
   depends_on: [
     'fetch',
@@ -35,7 +34,7 @@ local PipelineLint = {
         'git fetch -tq',
         'pip install poetry poetry-dynamic-versioning -qq',
         'poetry install -q',
-        'poetry run yapf -dr ./ansiblelater',
+        'poetry run yapf -dr ./dockerautotag',
       ],
     },
     {
@@ -47,8 +46,8 @@ local PipelineLint = {
       commands: [
         'git fetch -tq',
         'pip install poetry poetry-dynamic-versioning -qq',
-        'poetry install -q -E ansible-base',
-        'poetry run flake8 ./ansiblelater',
+        'poetry install -q',
+        'poetry run flake8 ./dockerautotag',
       ],
     },
   ],
@@ -104,8 +103,8 @@ local PipelineSecurity = {
       commands: [
         'git fetch -tq',
         'pip install poetry poetry-dynamic-versioning -qq',
-        'poetry install -q -E ansible-base',
-        'poetry run bandit -r ./ansiblelater -x ./ansiblelater/test',
+        'poetry install -q',
+        'poetry run bandit -r ./dockerautotag -x ./dockerautotag/test',
       ],
     },
   ],
