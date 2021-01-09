@@ -90,9 +90,9 @@ class Autotag:
         except ValueError:
             try:
                 version = semantic_version.Version.coerce(ref)
-            except Exception:  #noqa:B902
+            except Exception:  # noqa:B902
                 return default
-        except Exception:  #noqa:B902
+        except Exception:  # noqa:B902
             return default
 
         if version.prerelease:
