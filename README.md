@@ -2,7 +2,7 @@
 
 Create docker tags from a given version string
 
-[![Build Status](https://img.shields.io/drone/build/thegeeklab/docker-autotag?logo=drone)](https://cloud.drone.io/thegeeklab/docker-autotag)
+[![Build Status](https://img.shields.io/drone/build/thegeeklab/docker-autotag?logo=drone)](https://drone.thegeeklab.de/thegeeklab/docker-autotag)
 [![Docker Hub](https://img.shields.io/badge/dockerhub-latest-blue.svg?logo=docker&logoColor=white)](https://hub.docker.com/r/thegeeklab/docker-autotag)
 [![Quay.io](https://img.shields.io/badge/quay-latest-blue.svg?logo=docker&logoColor=white)](https://quay.io/repository/thegeeklab/docker-autotag)
 [![Python Version](https://img.shields.io/pypi/pyversions/docker-autotag.svg)](https://pypi.org/project/docker-autotag/)
