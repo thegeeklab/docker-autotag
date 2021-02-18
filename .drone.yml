@@ -202,11 +202,10 @@ platform:
 
 steps:
 - name: build
-  image: python:3.9-alpine
+  image: python:3.9
   commands:
-  - apk --update --quiet add build-base libffi-dev musl-dev libressl-dev python3-dev cargo git
+  - apk --update --quiet add py3-cryptography
   - git fetch -tq
-  - pip install --upgrade --no-cache-dir pip
   - pip install poetry poetry-dynamic-versioning -qq
   - poetry build
 
@@ -282,11 +281,10 @@ platform:
 
 steps:
 - name: build
-  image: python:3.9-alpine
+  image: python:3.9
   commands:
-  - apk --update --quiet add build-base libffi-dev musl-dev libressl-dev python3-dev cargo git
+  - apk --update --quiet add py3-cryptography
   - git fetch -tq
-  - pip install --upgrade --no-cache-dir pip
   - pip install poetry poetry-dynamic-versioning -qq
   - poetry build
 
@@ -362,11 +360,10 @@ platform:
 
 steps:
 - name: build
-  image: python:3.9-alpine
+  image: python:3.9
   commands:
-  - apk --update --quiet add build-base libffi-dev musl-dev libressl-dev python3-dev cargo git
+  - apk --update --quiet add py3-cryptography
   - git fetch -tq
-  - pip install --upgrade --no-cache-dir pip
   - pip install poetry poetry-dynamic-versioning -qq
   - poetry build
 
@@ -529,6 +526,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 1e36472e0cf66a361e602a626ef1910979a3829c5a9ea5718f027def78a5b4c1
+hmac: c8771acc9b83a6e5d1c3784296b7264e224a6175e8b19eec7ddd25fa99d6ed74
 
 ...
