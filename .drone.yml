@@ -12,6 +12,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run yapf -dr ./dockerautotag
   environment:
@@ -22,6 +23,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run flake8 ./dockerautotag
   environment:
@@ -122,6 +124,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run bandit -r ./dockerautotag -x ./dockerautotag/test
   environment:
@@ -364,7 +367,7 @@ steps:
 - name: build
   image: python:3.9-alpine
   commands:
-  - apk add -Uq --no-cache build-base libressl-dev libffi-dev musl-dev python3-dev git
+  - apk add -Uq --no-cache build-base libressl-dev libffi-dev musl-dev python3-dev git cargo
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
   - poetry build
@@ -528,6 +531,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 6cba4f10f98f5dc5e894104e364cd0b619d81f0b1a1a61b33bd6b074b30a5b3c
+hmac: 60c8a6c7ee1fbe86044bcd4b9dcc87b503afd19d514685bbb537486273a83c98
 
 ...
