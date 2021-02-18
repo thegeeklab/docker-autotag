@@ -12,7 +12,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run yapf -dr ./dockerautotag
   environment:
     PY_COLORS: 1
@@ -22,7 +22,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run flake8 ./dockerautotag
   environment:
     PY_COLORS: 1
@@ -51,7 +51,7 @@ steps:
   image: python:3.6
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry version
   - poetry run docker-autotag --help
   environment:
@@ -63,7 +63,7 @@ steps:
   image: python:3.7
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry version
   - poetry run docker-autotag --help
   environment:
@@ -75,7 +75,7 @@ steps:
   image: python:3.8
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry version
   - poetry run docker-autotag --help
   environment:
@@ -87,7 +87,7 @@ steps:
   image: python:3.9
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry version
   - poetry run docker-autotag --help
   environment:
@@ -118,7 +118,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run bandit -r ./dockerautotag -x ./dockerautotag/test
   environment:
     PY_COLORS: 1
@@ -529,6 +529,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 6c2f2b96724c5f5ae068e58f9474c300006d7547402ff31985b288e37670ceff
+hmac: 1e36472e0cf66a361e602a626ef1910979a3829c5a9ea5718f027def78a5b4c1
 
 ...
