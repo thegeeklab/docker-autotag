@@ -1,4 +1,3 @@
----
 repository:
   name: docker-autotag
   description: Create docker tags from a given version string
@@ -8,7 +7,7 @@ repository:
   has_issues: true
   has_projects: false
   has_wiki: false
-  has_downloads: false
+  has_downloads: true
 
   default_branch: main
 
