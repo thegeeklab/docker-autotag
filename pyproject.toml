@@ -57,7 +57,7 @@ pydocstyle = "6.1.1"
 pytest = "6.2.4"
 pytest-cov = "2.12.0"
 pytest-mock = "3.6.1"
-requests-mock = "1.9.2"
+requests-mock = "1.9.3"
 yapf = "0.31.0"
 
 [tool.poetry.scripts]
