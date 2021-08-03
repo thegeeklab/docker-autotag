@@ -337,11 +337,11 @@ python-versions = ">=2.6"
 
 [[package]]
 name = "pdoc3"
-version = "0.9.2"
+version = "0.10.0"
 description = "Auto-generate API documentation for Python projects."
 category = "dev"
 optional = false
-python-versions = ">= 3.5"
+python-versions = ">= 3.6"
 
 [package.dependencies]
 mako = "*"
@@ -630,7 +630,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6.0"
-content-hash = "f7649fbc2d97f01eeccb83ae92061b1c07985fd2040fd276716d9f9120d4b8a8"
+content-hash = "f70a54cfc28ec07999408897f0d43c192a69929072cbd36a37dd1f6db3de6b6c"
 
 [metadata.files]
 atomicwrites = [
@@ -832,7 +832,7 @@ pbr = [
     {file = "pbr-5.6.0.tar.gz", hash = "sha256:42df03e7797b796625b1029c0400279c7c34fd7df24a7d7818a1abb5b38710dd"},
 ]
 pdoc3 = [
-    {file = "pdoc3-0.9.2.tar.gz", hash = "sha256:9df5d931f25f353c69c46819a3bd03ef96dd286f2a70bb1b93a23a781f91faa1"},
+    {file = "pdoc3-0.10.0.tar.gz", hash = "sha256:5f22e7bcb969006738e1aa4219c75a32f34c2d62d46dc9d2fb2d3e0b0287e4b7"},
 ]
 pep8-naming = [
     {file = "pep8-naming-0.12.0.tar.gz", hash = "sha256:1f9a3ecb2f3fd83240fd40afdd70acc89695c49c333413e49788f93b61827e12"},
