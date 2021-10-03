@@ -49,19 +49,6 @@ steps:
     commands:
       - git fetch -tq
 
-  - name: python36-pytest
-    image: python:3.6
-    commands:
-      - pip install poetry poetry-dynamic-versioning -qq
-      - poetry config experimental.new-installer false
-      - poetry install
-      - poetry version
-      - poetry run docker-autotag --help
-    environment:
-      PY_COLORS: 1
-    depends_on:
-      - fetch
-
   - name: python37-pytest
     image: python:3.7
     commands:
@@ -545,6 +532,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 88b4021809213f30f09bc4863a0d8d4eb07a2a1ca6c94fc36652e5c9fd580d75
+hmac: 96929fe2dbc8b669cc584b68b7ccf0663cdfb7658088a0b3b34d49aad4ad5888
 
 ...
