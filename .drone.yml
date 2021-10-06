@@ -8,7 +8,7 @@ platform:
 
 steps:
   - name: yapf
-    image: python:3.9
+    image: python:3.10
     commands:
       - git fetch -tq
       - pip install poetry poetry-dynamic-versioning -qq
@@ -19,7 +19,7 @@ steps:
       PY_COLORS: 1
 
   - name: flake8
-    image: python:3.9
+    image: python:3.10
     commands:
       - git fetch -tq
       - pip install poetry poetry-dynamic-versioning -qq
@@ -45,7 +45,7 @@ platform:
 
 steps:
   - name: fetch
-    image: python:3.9
+    image: python:3.10
     commands:
       - git fetch -tq
 
@@ -88,6 +88,19 @@ steps:
     depends_on:
       - fetch
 
+  - name: python310-pytest
+    image: python:3.10
+    commands:
+      - pip install poetry poetry-dynamic-versioning -qq
+      - poetry config experimental.new-installer false
+      - poetry install
+      - poetry version
+      - poetry run docker-autotag --help
+    environment:
+      PY_COLORS: 1
+    depends_on:
+      - fetch
+
 trigger:
   ref:
     - refs/heads/main
@@ -107,7 +120,7 @@ platform:
 
 steps:
   - name: bandit
-    image: python:3.9
+    image: python:3.10
     commands:
       - git fetch -tq
       - pip install poetry poetry-dynamic-versioning -qq
@@ -136,7 +149,7 @@ platform:
 
 steps:
   - name: build
-    image: python:3.9
+    image: python:3.10
     commands:
       - git fetch -tq
       - pip install poetry poetry-dynamic-versioning -qq
@@ -175,7 +188,7 @@ steps:
         - refs/tags/**
 
   - name: publish-pypi
-    image: python:3.9
+    image: python:3.10
     commands:
       - git fetch -tq
       - pip install poetry poetry-dynamic-versioning -qq
@@ -208,7 +221,7 @@ platform:
 
 steps:
   - name: build
-    image: python:3.9
+    image: python:3.10
     commands:
       - git fetch -tq
       - pip install poetry poetry-dynamic-versioning -qq
@@ -286,7 +299,7 @@ platform:
 
 steps:
   - name: build
-    image: python:3.9
+    image: python:3.10
     commands:
       - git fetch -tq
       - pip install poetry poetry-dynamic-versioning -qq
@@ -364,7 +377,7 @@ platform:
 
 steps:
   - name: build
-    image: python:3.9-alpine
+    image: python:3.10-alpine
     commands:
       - apk add -Uq --no-cache build-base openssl-dev libffi-dev musl-dev python3-dev git cargo
       - git fetch -tq
@@ -532,6 +545,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 96929fe2dbc8b669cc584b68b7ccf0663cdfb7658088a0b3b34d49aad4ad5888
+hmac: f7c56c0b77bc2b2c3548e91260baa15df3101e917537e5fac2a24e6feff12835
 
 ...
