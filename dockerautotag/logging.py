@@ -11,7 +11,7 @@ from dockerautotag.utils import Singleton
 from dockerautotag.utils import to_bool
 
 CONSOLE_FORMAT = "{}[%(levelname)s]{} %(message)s"
-JSON_FORMAT = "(asctime) (levelname) (message)"
+JSON_FORMAT = "%(asctime)s %(levelname)s %(message)s"
 
 
 def _should_do_markup():
