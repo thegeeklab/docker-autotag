@@ -58,7 +58,7 @@ pytest = "6.2.5"
 pytest-cov = "3.0.0"
 pytest-mock = "3.6.1"
 requests-mock = "1.9.3"
-yapf = "0.31.0"
+yapf = "0.32.0"
 
 [tool.poetry.scripts]
 docker-autotag = "dockerautotag.cli:main"
