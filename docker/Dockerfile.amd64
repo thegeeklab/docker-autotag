@@ -8,6 +8,7 @@ LABEL org.opencontainers.image.source="https://github.com/thegeeklab/docker-auto
 LABEL org.opencontainers.image.documentation="https://github.com/thegeeklab/docker-autotag"
 
 ENV PY_COLORS=1
+ENV TZ=UTC
 
 ADD dist/docker_autotag-*.whl /
 
