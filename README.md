@@ -21,6 +21,8 @@ Simple tool to create a list of docker tags from a given version string.
 DOCKER_AUTOTAG_OUTPUT_FILE=
 # adds a given suffix to every determined tag
 DOCKER_AUTOTAG_SUFFIX=
+# returns only tags with the applied suffix
+DOCKER_AUTOTAG_SUFFIX_STRICT=False
 # version string to use; returns 'latest' if nothing is specified
 DOCKER_AUTOTAG_VERSION=
 # comma-seprated list of static tags to add to the result set
@@ -58,6 +60,9 @@ DOCKER_AUTOTAG_IGNORE_PRERELEASE=True DOCKER_AUTOTAG_VERSION=1.0.0-beta docker-a
 
 DOCKER_AUTOTAG_SUFFIX=amd64 DOCKER_AUTOTAG_VERSION=1.0.0 docker-autotag
 # 1.0.0,1.0,1,1.0.0-amd64,1.0-amd64,1-amd64
+
+DOCKER_AUTOTAG_SUFFIX=amd64 DOCKER_AUTOTAG_SUFFIX_STRICT=True DOCKER_AUTOTAG_VERSION=1.0.0 docker-autotag
+# 1.0.0-amd64,1.0-amd64,1-amd64
 
 DOCKER_AUTOTAG_EXTRA_TAGS=extra1,extra2 DOCKER_AUTOTAG_VERSION=1.0.0 docker-autotag
 # 1.0.0,1.0,1,extra1,extra2
