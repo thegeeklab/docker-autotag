@@ -42,6 +42,7 @@ class Autotag:
         config["file"] = normalize_path(output_raw)
 
         config["suffix"] = os.environ.get("DOCKER_AUTOTAG_SUFFIX", None)
+        config["suffix_strict"] = to_bool(os.environ.get("DOCKER_AUTOTAG_SUFFIX_STRICT", False))
         config["version"] = os.environ.get("DOCKER_AUTOTAG_VERSION", None)
         config["extra"] = os.environ.get("DOCKER_AUTOTAG_EXTRA_TAGS", None)
         config["force_latest"] = to_bool(os.environ.get("DOCKER_AUTOTAG_FORCE_LATEST", False))
@@ -58,11 +59,14 @@ class Autotag:
         return tags + e
 
     @staticmethod
-    def _tag_suffix(tags, suffix):
+    def _tag_suffix(tags, suffix, suffix_strict):
         if not suffix:
             return tags
 
-        res = copy.deepcopy(tags)
+        res = []
+        if not suffix_strict:
+            res = copy.deepcopy(tags)
+
         for t in tags:
             if t == "latest":
                 res.append(suffix)
@@ -116,7 +120,7 @@ class Autotag:
         config = self.config
 
         v = self._default_tags(config["version"], config["ignore_pre"], config["force_latest"])
-        v = self._tag_suffix(v, config["suffix"])
+        v = self._tag_suffix(v, config["suffix"], config["suffix_strict"])
         v = self._tag_extra(v, config["extra"])
 
         if config["file"]:
