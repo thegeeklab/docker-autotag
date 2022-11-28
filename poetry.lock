@@ -170,7 +170,7 @@ test = ["pytest"]
 
 [[package]]
 name = "flake8-logging-format"
-version = "0.8.1"
+version = "0.9.0"
 description = ""
 category = "dev"
 optional = false
@@ -638,7 +638,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.0"
-content-hash = "0a2b914b55cce5ac4a39a0949d74bb166fa2640bb6acd421051d4885462c77e0"
+content-hash = "13890284821ec7b0dc6788822c9f662bd1594163cf2c7c6107e51e37719f9e53"
 
 [metadata.files]
 attrs = [
@@ -745,7 +745,7 @@ flake8-isort = [
     {file = "flake8_isort-5.0.3-py3-none-any.whl", hash = "sha256:8c4ab431d87780d0c8336e9614e50ef11201bc848ef64ca017532dec39d4bf49"},
 ]
 flake8-logging-format = [
-    {file = "flake8-logging-format-0.8.1.tar.gz", hash = "sha256:fecab361ff1700d4550cedbd3f4475d45eda01fcaa800768c9551d2ced16b780"},
+    {file = "flake8-logging-format-0.9.0.tar.gz", hash = "sha256:e830cc49091e4b8ab9ea3da69a3da074bd631ce9a7db300e5c89fb48ba4a6986"},
 ]
 flake8-pep3101 = [
     {file = "flake8-pep3101-2.0.0.tar.gz", hash = "sha256:ae2ee1758734a473ca971b4bf9ff09c961b6099916db91fdb6b9718328dfcacb"},
