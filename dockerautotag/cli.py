@@ -26,9 +26,7 @@ class Autotag:
         parser = argparse.ArgumentParser(
             description=("Creates a list of docker tags from a given version string.")
         )
-        parser.add_argument(
-            "--version", action="version", version=f"%(prog)s {__version__}"
-        )
+        parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
 
         return parser.parse_args()
 
@@ -91,9 +89,9 @@ class Autotag:
         except ValueError:
             try:
                 version = semantic_version.Version.coerce(ref)
-            except Exception: # noqa: BLE001
+            except Exception:  # noqa: BLE001
                 return default
-        except Exception: # noqa: BLE001
+        except Exception:  # noqa: BLE001
             return default
 
         if version.prerelease:
@@ -126,7 +124,6 @@ class Autotag:
                     f.write(",".join(v))
             except OSError as e:
                 self.logger.error(f"Unable to write file: {str(e)}")
-
 
 
 def main():

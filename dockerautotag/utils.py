@@ -10,6 +10,7 @@ def normalize_path(path):
 
     return None
 
+
 def to_bool(string):
     return bool(strtobool(str(string)))
 
