@@ -7,7 +7,7 @@ platform:
   arch: amd64
 
 steps:
-  - name: yapf
+  - name: check-format
     image: python:3.11
     commands:
       - git fetch -tq
@@ -18,14 +18,14 @@ steps:
     environment:
       PY_COLORS: 1
 
-  - name: flake8
+  - name: check-coding
     image: python:3.11
     commands:
       - git fetch -tq
       - pip install poetry poetry-dynamic-versioning -qq
       - poetry config experimental.new-installer false
       - poetry install
-      - poetry run flake8 ./dockerautotag
+      - poetry run ruff ./dockerautotag
     environment:
       PY_COLORS: 1
 
@@ -125,35 +125,6 @@ depends_on:
 
 ---
 kind: pipeline
-name: security
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-  - name: bandit
-    image: python:3.11
-    commands:
-      - git fetch -tq
-      - pip install poetry poetry-dynamic-versioning -qq
-      - poetry config experimental.new-installer false
-      - poetry install
-      - poetry run bandit -r ./dockerautotag -x ./dockerautotag/test
-    environment:
-      PY_COLORS: 1
-
-trigger:
-  ref:
-    - refs/heads/main
-    - refs/tags/**
-    - refs/pull/**
-
-depends_on:
-  - test
-
----
-kind: pipeline
 name: build-package
 
 platform:
@@ -222,7 +193,7 @@ trigger:
     - refs/pull/**
 
 depends_on:
-  - security
+  - test
 
 ---
 kind: pipeline
@@ -306,7 +277,7 @@ trigger:
     - refs/pull/**
 
 depends_on:
-  - security
+  - test
 
 ---
 kind: pipeline
@@ -373,6 +344,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 97784e377b46d5bf3b033215d6c68a5fa0bd8c2d295119ea32cbf17952723abc
+hmac: 57788042ee06f47c4650e55cc4b3ea79a8bbaf72ee33ee928551bd12f8895b50
 
 ...

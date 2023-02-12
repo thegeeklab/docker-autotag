@@ -9,10 +9,7 @@ import semantic_version
 
 from dockerautotag import __version__
 from dockerautotag.logging import SingleLog
-from dockerautotag.utils import normalize_path
-from dockerautotag.utils import to_bool
-from dockerautotag.utils import to_prerelease
-from dockerautotag.utils import trim_prefix
+from dockerautotag.utils import normalize_path, to_bool, to_prerelease, trim_prefix
 
 
 class Autotag:
@@ -29,9 +26,7 @@ class Autotag:
         parser = argparse.ArgumentParser(
             description=("Creates a list of docker tags from a given version string.")
         )
-        parser.add_argument(
-            "--version", action="version", version="%(prog)s {}".format(__version__)
-        )
+        parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
 
         return parser.parse_args()
 
@@ -71,7 +66,7 @@ class Autotag:
             if t == "latest":
                 res.append(suffix)
             else:
-                res.append("{}-{}".format(t, suffix))
+                res.append(f"{t}-{suffix}")
 
         return res
 
@@ -94,9 +89,9 @@ class Autotag:
         except ValueError:
             try:
                 version = semantic_version.Version.coerce(ref)
-            except Exception:  # noqa:B902
+            except Exception:  # noqa: BLE001
                 return default
-        except Exception:  # noqa:B902
+        except Exception:  # noqa: BLE001
             return default
 
         if version.prerelease:
@@ -108,11 +103,11 @@ class Autotag:
             if not ignore_pre:
                 return tags
 
-        tags.append("{}.{}".format(version.major, version.minor))
-        tags.append("{}.{}.{}".format(version.major, version.minor, version.patch))
+        tags.append(f"{version.major}.{version.minor}")
+        tags.append(f"{version.major}.{version.minor}.{version.patch}")
 
         if version.major > 0:
-            tags.append("{}".format(version.major))
+            tags.append(f"{version.major}")
 
         return tags
 
@@ -127,10 +122,8 @@ class Autotag:
             try:
                 with open(config["file"], "w") as f:
                     f.write(",".join(v))
-            except IOError as e:
-                self.logger.error("Unable to write file: {}".format(str(e)))
-
-        print(",".join(v))
+            except OSError as e:
+                self.logger.error(f"Unable to write file: {str(e)}")
 
 
 def main():
