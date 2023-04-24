@@ -44,12 +44,12 @@ semantic-version = "2.10.0"
 docker-autotag = "dockerautotag.cli:main"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "0.0.261"
-pytest = "7.3.0"
+ruff = "0.0.262"
+pytest = "7.3.1"
 pytest-mock = "3.10.0"
 pytest-cov = "4.0.0"
 toml = "0.10.2"
-yapf = "0.32.0"
+yapf = "0.33.0"
 
 [tool.poetry-dynamic-versioning]
 enable = true
