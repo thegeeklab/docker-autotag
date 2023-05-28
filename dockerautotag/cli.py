@@ -123,7 +123,7 @@ class Autotag:
                 with open(config["file"], "w") as f:
                     f.write(",".join(v))
             except OSError as e:
-                self.logger.error(f"Unable to write file: {str(e)}")
+                self.logger.error(f"Unable to write file: {e!s}")
 
 
 def main():
