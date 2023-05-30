@@ -22,7 +22,7 @@ def trim_prefix(text, prefix):
 
 
 def to_prerelease(tup):
-    return "".join(tup)
+    return ".".join(tup)
 
 
 class Singleton(type):
