@@ -3,6 +3,7 @@
 import argparse
 import copy
 import os
+import sys
 from collections import defaultdict
 
 import semantic_version
@@ -118,12 +119,15 @@ class Autotag:
         v = self._tag_suffix(v, config["suffix"], config["suffix_strict"])
         v = self._tag_extra(v, config["extra"])
 
-        if config["file"]:
-            try:
+        try:
+            if config["file"]:
                 with open(config["file"], "w") as f:
                     f.write(",".join(v))
-            except OSError as e:
-                self.logger.error(f"Unable to write file: {e!s}")
+            else:
+                sys.stdout.write(",".join(v))
+                sys.stdout.write("\n")
+        except OSError as e:
+            self.logger.error(f"Unable to write file: {e!s}")
 
 
 def main():
