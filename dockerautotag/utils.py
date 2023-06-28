@@ -2,6 +2,7 @@
 
 import os
 from distutils.util import strtobool
+from typing import ClassVar
 
 
 def normalize_path(path):
@@ -28,7 +29,7 @@ def to_prerelease(tup):
 class Singleton(type):
     """Meta singleton class."""
 
-    _instances = {}
+    _instances: ClassVar[dict] = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
