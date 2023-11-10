@@ -92,9 +92,7 @@ class Log:
         handler.addFilter(LogFilter(logging.WARNING))
         handler.setFormatter(
             MultilineFormatter(
-                self.warning(
-                    CONSOLE_FORMAT.format(colorama.Fore.YELLOW, colorama.Style.RESET_ALL)
-                )
+                self.warning(CONSOLE_FORMAT.format(colorama.Fore.YELLOW, colorama.Style.RESET_ALL))
             )
         )
 

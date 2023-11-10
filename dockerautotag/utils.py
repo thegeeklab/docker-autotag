@@ -25,7 +25,7 @@ def strtobool(value):
         "f": False,
         "false": False,
         "off": False,
-        "0": False
+        "0": False,
     }
 
     try:
@@ -40,7 +40,7 @@ def to_bool(string):
 
 def trim_prefix(text, prefix):
     if text.startswith(prefix):
-        return text[len(prefix):]
+        return text[len(prefix) :]
     return text
 
 
