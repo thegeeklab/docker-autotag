@@ -97,9 +97,7 @@ class Autotag:
 
         if version.prerelease:
             tags.append(
-                "{}.{}.{}-{}".format(
-                    version.major, version.minor, version.patch, to_prerelease(version.prerelease)
-                )
+                f"{version.major}.{version.minor}.{version.patch}-{to_prerelease(version.prerelease)}"
             )
             if not ignore_pre:
                 return tags
