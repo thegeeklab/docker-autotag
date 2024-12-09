@@ -39,7 +39,7 @@ semantic-version = "2.10.0"
 docker-autotag = "dockerautotag.cli:main"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "0.8.1"
+ruff = "0.8.2"
 pytest = "8.3.4"
 pytest-mock = "3.14.0"
 pytest-cov = "6.0.0"
