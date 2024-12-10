@@ -12,6 +12,8 @@ Create docker tags from a given version string
 [![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/thegeeklab/docker-autotag)
 [![License: MIT](https://img.shields.io/github/license/thegeeklab/docker-autotag)](https://github.com/thegeeklab/docker-autotag/blob/main/LICENSE)
 
+> Discontinued: This project is no longer maintained. Please use [tag-sv](https://github.com/thegeeklab/tag-sv) instead.
+
 Simple tool to create a list of docker tags from a given version string.
 
 ## Environment variables
